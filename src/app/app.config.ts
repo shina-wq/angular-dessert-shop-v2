@@ -5,6 +5,7 @@ import {
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import { LoggingErrorHandler } from './services/logging-error-handler';
+import { CART_STORAGE_KEY } from './services/storage.service';
 
 /**
  * Application-level providers, registered once when the app boots.
@@ -23,5 +24,8 @@ export const appConfig: ApplicationConfig = {
 
     // Swap Angular's built-in ErrorHandler for our own class (useClass).
     { provide: ErrorHandler, useClass: LoggingErrorHandler },
+
+    // Our own InjectionToken: a plain config value that services can inject.
+    { provide: CART_STORAGE_KEY, useValue: 'dessert-shop.cart' },
   ],
 };
