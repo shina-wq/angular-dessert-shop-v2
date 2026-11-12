@@ -1,5 +1,6 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { CartItem, Product } from '../models/product';
+import { UtilService } from './util.service';
 
 /**
  * Single source of truth for the shopping cart.
@@ -9,16 +10,19 @@ import { CartItem, Product } from '../models/product';
  */
 @Injectable({ providedIn: 'root' })
 export class CartService {
+  // Services can inject other services, just like components can.
+  private readonly util = inject(UtilService);
+
   // Private and writable: only this service can change the cart.
   private readonly _items = signal<CartItem[]>([]);
 
   // Public and read-only: components can read the cart but not modify it directly.
   readonly items = this._items.asReadonly();
 
-  readonly count = computed(() => this._items().reduce((sum, item) => sum + item.quantity, 0));
+  readonly count = computed(() => this.util.sum(this._items(), (item) => item.quantity));
 
   readonly total = computed(() =>
-    this._items().reduce((sum, item) => sum + item.product.price * item.quantity, 0),
+    this.util.roundToCents(this.util.sum(this._items(), (item) => this.util.lineTotal(item))),
   );
 
   readonly isEmpty = computed(() => this._items().length === 0);

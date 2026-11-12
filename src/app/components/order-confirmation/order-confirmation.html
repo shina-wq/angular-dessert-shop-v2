@@ -16,7 +16,7 @@
                 <span class="unit">&#64; {{ item.product.price | currency }}</span>
               </p>
             </div>
-            <span class="line-total">{{ item.product.price * item.quantity | currency }}</span>
+            <span class="line-total">{{ util.lineTotal(item) | currency }}</span>
           </li>
         }
       </ul>

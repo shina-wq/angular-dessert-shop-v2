@@ -15,7 +15,7 @@
             <p class="details">
               <span class="qty">{{ item.quantity }}x</span>
               <span class="unit">&#64; {{ item.product.price | currency }}</span>
-              <span class="line-total">{{ item.product.price * item.quantity | currency }}</span>
+              <span class="line-total">{{ util.lineTotal(item) | currency }}</span>
             </p>
           </div>
           <button
