@@ -1,8 +1,10 @@
 import {
   ApplicationConfig,
   DEFAULT_CURRENCY_CODE,
+  ErrorHandler,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
+import { LoggingErrorHandler } from './services/logging-error-handler';
 
 /**
  * Application-level providers, registered once when the app boots.
@@ -18,5 +20,8 @@ export const appConfig: ApplicationConfig = {
 
     // Every `currency` pipe in the app formats prices in US dollars.
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'USD' },
+
+    // Swap Angular's built-in ErrorHandler for our own class (useClass).
+    { provide: ErrorHandler, useClass: LoggingErrorHandler },
   ],
 };

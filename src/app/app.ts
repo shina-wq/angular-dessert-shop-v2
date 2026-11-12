@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Cart } from './components/cart/cart';
 import { OrderConfirmation } from './components/order-confirmation/order-confirmation';
 import { ProductList } from './components/product-list/product-list';
-import { CartService } from './services/cart.service';
+import { OrderService } from './services/order.service';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +11,5 @@ import { CartService } from './services/cart.service';
   styleUrl: './app.css',
 })
 export class App {
-  private readonly cart = inject(CartService);
-
-  orderConfirmed = false;
-
-  startNewOrder(): void {
-    this.cart.clear();
-    this.orderConfirmed = false;
-  }
+  protected readonly order = inject(OrderService);
 }

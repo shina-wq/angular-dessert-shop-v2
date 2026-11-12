@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { CartService } from '../../services/cart.service';
+import { OrderService } from '../../services/order.service';
 import { UtilService } from '../../services/util.service';
 
 @Component({
@@ -11,7 +12,6 @@ import { UtilService } from '../../services/util.service';
 })
 export class Cart {
   protected readonly cart = inject(CartService);
+  protected readonly order = inject(OrderService);
   protected readonly util = inject(UtilService);
-
-  @Output() confirm = new EventEmitter<void>();
 }

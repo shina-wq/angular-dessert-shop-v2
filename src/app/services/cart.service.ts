@@ -1,5 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { CartItem, Product } from '../models/product';
+import { LoggerService } from './logger.service';
 import { UtilService } from './util.service';
 
 /**
@@ -12,6 +13,7 @@ import { UtilService } from './util.service';
 export class CartService {
   // Services can inject other services, just like components can.
   private readonly util = inject(UtilService);
+  private readonly logger = inject(LoggerService);
 
   // Private and writable: only this service can change the cart.
   private readonly _items = signal<CartItem[]>([]);
@@ -38,6 +40,7 @@ export class CartService {
       return;
     }
     this._items.update((items) => [...items, { product, quantity: 1 }]);
+    this.logger.info(`Added ${product.name} to cart`);
   }
 
   increment(product: Product): void {
@@ -49,21 +52,37 @@ export class CartService {
   }
 
   remove(product: Product): void {
+    if (!this.find(product)) {
+      this.logger.warn(`Tried to remove ${product.name}, which is not in the cart`);
+      return;
+    }
     this._items.update((items) => items.filter((item) => !this.matches(item, product)));
+    this.logger.info(`Removed ${product.name} from cart`);
   }
 
   clear(): void {
     this._items.set([]);
+    this.logger.info('Cart cleared');
   }
 
   private changeQuantity(product: Product, delta: number): void {
+    const item = this.find(product);
+    if (!item) {
+      this.logger.warn(`Tried to change ${product.name}, which is not in the cart`);
+      return;
+    }
+
+    const quantity = item.quantity + delta;
+
+    if (quantity <= 0) {
+      this.remove(product);
+      return;
+    }
+
     this._items.update((items) =>
-      items
-        .map((item) =>
-          this.matches(item, product) ? { ...item, quantity: item.quantity + delta } : item,
-        )
-        .filter((item) => item.quantity > 0),
+      items.map((item) => (this.matches(item, product) ? { ...item, quantity } : item)),
     );
+    this.logger.info(`${product.name} quantity is now ${quantity}`);
   }
 
   private find(product: Product): CartItem | undefined {

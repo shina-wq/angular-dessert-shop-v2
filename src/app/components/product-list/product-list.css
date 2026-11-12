@@ -1,62 +1,7 @@
-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px 24px;
-  margin-bottom: 32px;
-}
-
 h1 {
+  margin-bottom: 32px;
   font-size: 40px;
   font-weight: 700;
-}
-
-.controls {
-  display: flex;
-  flex: 1 1 320px;
-  max-width: 480px;
-  gap: 12px;
-}
-
-.controls input,
-.controls select {
-  height: 44px;
-  padding: 0 16px;
-  font: inherit;
-  font-size: 14px;
-  color: var(--rose-900);
-  background: #fff;
-  border: 1px solid var(--rose-300);
-  border-radius: 999px;
-}
-
-/* width: 100% lets the input shrink instead of forcing the page wider */
-.controls input {
-  flex: 1 1 auto;
-  width: 100%;
-  min-width: 0;
-}
-
-.controls select {
-  flex: 0 0 auto;
-  cursor: pointer;
-}
-
-.controls input:focus-visible,
-.controls select:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: 1px;
-  border-color: var(--red);
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
 }
 
 .grid {
@@ -66,6 +11,5 @@ h1 {
 }
 
 .empty {
-  grid-column: 1 / -1;
   color: var(--rose-500);
 }

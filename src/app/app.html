@@ -1,8 +1,8 @@
 <main>
   <app-product-list />
-  <app-cart (confirm)="orderConfirmed = true" />
+  <app-cart />
 </main>
 
-@if (orderConfirmed) {
-  <app-order-confirmation (newOrder)="startNewOrder()" />
+@if (order.confirmed()) {
+  <app-order-confirmation />
 }
