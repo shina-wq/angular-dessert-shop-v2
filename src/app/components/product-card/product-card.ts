@@ -1,7 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CurrencyPipe, NgClass } from '@angular/common';
 import { Product } from '../../models/product';
 
+/**
+ * Presentational component: it only displays a product and reports clicks.
+ * It knows nothing about services, which keeps it reusable anywhere.
+ */
 @Component({
   selector: 'app-product-card',
   imports: [NgClass, CurrencyPipe],
@@ -9,10 +13,10 @@ import { Product } from '../../models/product';
   styleUrl: './product-card.css',
 })
 export class ProductCard {
-  @Input() product!: Product;
-  @Input() quantity = 0;
+  readonly product = input.required<Product>();
+  readonly quantity = input(0);
 
-  @Output() add = new EventEmitter<void>();
-  @Output() increment = new EventEmitter<void>();
-  @Output() decrement = new EventEmitter<void>();
+  readonly add = output<void>();
+  readonly increment = output<void>();
+  readonly decrement = output<void>();
 }
