@@ -9,14 +9,14 @@
         id="product-search"
         type="search"
         placeholder="Search desserts"
-        [value]="query()"
-        (input)="query.set(search.value)"
+        [value]="filter.query()"
+        (input)="filter.setQuery(search.value)"
       />
 
       <label class="visually-hidden" for="product-sort">Sort desserts</label>
-      <select #sorter id="product-sort" (change)="setSort(sorter.value)">
+      <select #sorter id="product-sort" (change)="filter.setSort(sorter.value)">
         @for (option of sortOptions; track option.value) {
-          <option [value]="option.value" [selected]="option.value === sort()">
+          <option [value]="option.value" [selected]="option.value === filter.sort()">
             {{ option.label }}
           </option>
         }
@@ -25,7 +25,7 @@
   </header>
 
   <div class="grid">
-    @for (product of products(); track product.name) {
+    @for (product of filter.products(); track product.name) {
       <app-product-card
         [product]="product"
         [quantity]="cart.quantityOf(product)"
@@ -35,8 +35,8 @@
       />
     } @empty {
       <p class="empty">
-        @if (query()) {
-          No desserts match “{{ query() }}”.
+        @if (filter.query()) {
+          No desserts match “{{ filter.query() }}”.
         } @else {
           No desserts available right now. Please check back later.
         }
