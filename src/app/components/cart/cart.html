@@ -1,14 +1,14 @@
 <aside class="cart">
-  <h2>Your Cart ({{ count }})</h2>
+  <h2>Your Cart ({{ cart.count() }})</h2>
 
-  @if (items.length === 0) {
+  @if (cart.isEmpty()) {
     <div class="empty">
       <img src="assets/images/illustration-empty-cart.svg" alt="" />
       <p>Your added items will appear here</p>
     </div>
   } @else {
     <ul>
-      @for (item of items; track item.product.name) {
+      @for (item of cart.items(); track item.product.name) {
         <li>
           <div>
             <p class="name">{{ item.product.name }}</p>
@@ -21,7 +21,7 @@
           <button
             class="remove-btn"
             type="button"
-            (click)="remove.emit(item.product)"
+            (click)="cart.remove(item.product)"
             [attr.aria-label]="'Remove ' + item.product.name"
           >
             <svg width="10" height="10" viewBox="0 0 10 10">
@@ -37,7 +37,7 @@
 
     <div class="total">
       <span>Order Total</span>
-      <strong>{{ total | currency }}</strong>
+      <strong>{{ cart.total() | currency }}</strong>
     </div>
 
     <p class="carbon">

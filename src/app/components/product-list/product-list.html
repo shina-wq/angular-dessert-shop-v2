@@ -5,10 +5,10 @@
     @for (product of products; track product.name) {
       <app-product-card
         [product]="product"
-        [quantity]="quantityOf(product)"
-        (add)="add.emit(product)"
-        (increment)="increment.emit(product)"
-        (decrement)="decrement.emit(product)"
+        [quantity]="cart.quantityOf(product)"
+        (add)="cart.add(product)"
+        (increment)="cart.increment(product)"
+        (decrement)="cart.decrement(product)"
       />
     } @empty {
       <p class="empty">No desserts available right now. Please check back later.</p>

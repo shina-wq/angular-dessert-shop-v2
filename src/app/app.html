@@ -1,19 +1,8 @@
 <main>
-  <app-product-list
-    [products]="products"
-    [cart]="cart"
-    (add)="addToCart($event)"
-    (increment)="increment($event)"
-    (decrement)="decrement($event)"
-  />
-  <app-cart
-    [items]="cart"
-    [total]="cartTotal"
-    (remove)="removeFromCart($event)"
-    (confirm)="orderConfirmed = true"
-  />
+  <app-product-list [products]="products" />
+  <app-cart (confirm)="orderConfirmed = true" />
 </main>
 
 @if (orderConfirmed) {
-  <app-order-confirmation [items]="cart" [total]="cartTotal" (newOrder)="startNewOrder()" />
+  <app-order-confirmation (newOrder)="startNewOrder()" />
 }

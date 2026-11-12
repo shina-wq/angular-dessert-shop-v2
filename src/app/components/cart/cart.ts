@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { CartItem, Product } from '../../models/product';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,17 +9,7 @@ import { CartItem, Product } from '../../models/product';
   styleUrl: './cart.css',
 })
 export class Cart {
-  @Input() items: CartItem[] = [];
-  @Input() total = 0;
+  protected readonly cart = inject(CartService);
 
-  @Output() remove = new EventEmitter<Product>();
   @Output() confirm = new EventEmitter<void>();
-
-  get count(): number {
-    let count = 0;
-    for (const item of this.items) {
-      count += item.quantity;
-    }
-    return count;
-  }
 }
